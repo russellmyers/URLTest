@@ -134,6 +134,23 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        android.net.ConnectivityManager connMgr = (android.net.ConnectivityManager)
+                getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+
+        android.net.NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // fetch data
+            TextView tv = (TextView)findViewById(R.id.networkView);
+            tv.setText("Network connection successful");
+
+        } else {
+            // display error
+            TextView tv = (TextView)findViewById(R.id.networkView);
+            tv.setText("Network connection unsuccessful");
+        }
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +182,7 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
 
                 if (networkInfo != null && networkInfo.isConnected()) {
                     // fetch data
-                    TextView tv = (TextView)findViewById(R.id.textView);
+                    TextView tv = (TextView)findViewById(R.id.networkView);
                     tv.setText("Network connection successful");
                     EditText et = (EditText)findViewById(R.id.urlToShow);
                     DownloadWebpageTask aTask = new DownloadWebpageTask();
@@ -178,7 +195,7 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
                     }
                 } else {
                     // display error
-                    TextView tv = (TextView)findViewById(R.id.textView);
+                    TextView tv = (TextView)findViewById(R.id.networkView);
                     tv.setText("Network connection unsuccessful");
                 }
 
@@ -247,7 +264,7 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
             jObject = null;
         }
 
-        TextView tv = (TextView)findViewById(R.id.textView);
+        TextView tv = (TextView)findViewById(R.id.fileView);
         try {
 
             tv.setText("HTML: " + "Quiz Code: " + jObject.get("quizCode") + " name: " + jObject.get("quizText") + " whole thing: " + output);
