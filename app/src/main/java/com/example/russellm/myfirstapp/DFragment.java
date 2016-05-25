@@ -32,6 +32,9 @@ import org.json.*;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.DialogFragment;
 
+import android.text.TextWatcher;
+import android.text.Editable;
+
 
 /**
  * Created by RussellM on 24/05/2016.
@@ -48,7 +51,7 @@ public class DFragment extends DialogFragment {
 
             // Do something else
 
-            Button installButton = (Button)getView().findViewById(R.id.installButton);
+            final Button installButton = (Button)rootView.findViewById(R.id.installButton);
             // Capture button clicks
             installButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
@@ -56,11 +59,40 @@ public class DFragment extends DialogFragment {
                 }
             });
 
-            Button cancelButton = (Button)getView().findViewById(R.id.cancelButton);
+            Button cancelButton = (Button)rootView.findViewById(R.id.cancelButton);
             // Capture button clicks
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
+                    getDialog().dismiss();
 
+                }
+            });
+
+            final EditText quizCodeEditText = (EditText)rootView.findViewById(R.id.quizCodeEditText);
+
+            quizCodeEditText.addTextChangedListener(new TextWatcher() {
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                   // textView.setVisibility(View.VISIBLE);
+                }
+
+                public void afterTextChanged(Editable s) {
+                    if (quizCodeEditText.getText().toString().equals("GENEV")) {
+                        installButton.setEnabled(true);
+                    }
+                    else {
+                        installButton.setEnabled(false);
+                    }
+                    /*
+                    if (s.length() == 0) {
+                        quizCodeEditText.setVisibility(View.GONE);
+                    } else {
+                        quizCodeEditText.setText("You have entered : " + quizCodeEditText.getText());
+                    }
+                    */
                 }
             });
 
