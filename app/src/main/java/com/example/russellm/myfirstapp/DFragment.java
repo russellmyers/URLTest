@@ -43,7 +43,7 @@ import android.widget.ProgressBar;
  * Created by RussellM on 24/05/2016.
  *
  */
-public class DFragment extends DialogFragment implements AsyncResponse {
+public class DFragment extends DialogFragment implements HTMLReaderResponse {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -142,14 +142,18 @@ public class DFragment extends DialogFragment implements AsyncResponse {
                 TextView net = (TextView) getView().findViewById(R.id.netIndicView);
                 net.setText("Network connection successful");
                 String link = "http://quizupdate.genevol.com/testQuizCode.php?quizCode=";
-                DownloadWebpageTask aTask = new DownloadWebpageTask();
-                aTask.delegate = DFragment.this;
-                aTask.execute(link + s);
+               // DownloadWebpageTask aTask = new DownloadWebpageTask();
+                HTMLReader r = new HTMLReader(link + s,this);
+
+                r.readHTML(this.getActivity());
+                //aTask.delegate = DFragment.this;
+               // aTask.execute(link + s);
                 try {
                     // String ss = a.get();
                 } catch (Exception e) {
 
                 }
+
             } else {
                 // display error
                 TextView net = (TextView)getView().findViewById(R.id.netIndicView);
@@ -159,7 +163,7 @@ public class DFragment extends DialogFragment implements AsyncResponse {
 
     //this override the implemented method from asyncTask
     @Override
-    public void processFinish(String output){
+    public void htmlReadFinish(String html,String err){
 
         Button installButton = (Button)getView().findViewById(R.id.installButton);
 
@@ -172,7 +176,7 @@ public class DFragment extends DialogFragment implements AsyncResponse {
         int i = 1;
         JSONObject jObject;
         try {
-            jObject = new JSONObject(output);
+            jObject = new JSONObject(html);
         }
         catch (Exception e) {
             jObject = null;
@@ -183,7 +187,10 @@ public class DFragment extends DialogFragment implements AsyncResponse {
         try {
             erS =  "";
             erS = (String)jObject.get("error");
-            erS = erS.substring(0,3);
+            if (erS.length() >= 3) {
+                erS = erS.substring(0, 3);
+            }
+
             if (erS.equals("NOK")) {
 
             }
@@ -205,7 +212,7 @@ public class DFragment extends DialogFragment implements AsyncResponse {
            // quizName.setText("HTML: " + "Quiz Code: " + jObject.get("quizCode") + " name: " + jObject.get("quizText") + " whole thing: " + output);
         }
         catch(Exception e) {
-            quizName.setText("Parsing error. Input: " + output);
+            quizName.setText("Parsing error. Input: " + html + " err: " + err);
 
         }
     }
