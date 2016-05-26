@@ -21,6 +21,7 @@ import org.json.*;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.DialogFragment;
 
+/*
 interface AsyncResponse {
         void processFinish(String output);
 }
@@ -28,6 +29,7 @@ interface AsyncResponse {
 
 
 class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+
 
     String DEBUG_TAG =  "My test app";
     public AsyncResponse delegate = null;
@@ -38,11 +40,11 @@ class DownloadWebpageTask extends AsyncTask<String, Void, String> {
 
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
-        /*
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
-        */
+
+       //char[] buffer = new char[len];
+       // reader.read(buffer);
+       // return new String(buffer);
+
         StringBuilder contentBuilder = new StringBuilder();
         try {
             BufferedReader in = new BufferedReader(reader);
@@ -70,8 +72,8 @@ class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         try {
             URL url = new URL(myurl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setReadTimeout(10000); // milliseconds
+            conn.setConnectTimeout(15000 ); // milliseconds
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             // Starts the query
@@ -114,10 +116,12 @@ class DownloadWebpageTask extends AsyncTask<String, Void, String> {
     }
 }
 
+*/
 
 
 
-public class MyActivity extends AppCompatActivity implements AsyncResponse {
+
+public class MyActivity extends AppCompatActivity implements HTMLReaderResponse {
 
 
     FragmentManager fm = getSupportFragmentManager();
@@ -133,6 +137,7 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
         setContentView(R.layout.activity_my);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         android.net.ConnectivityManager connMgr = (android.net.ConnectivityManager)
                 getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
@@ -174,13 +179,29 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 }
 
+                EditText et = (EditText)findViewById(R.id.urlToShow);
 
-                android.net.ConnectivityManager connMgr = (android.net.ConnectivityManager)
-                        getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+                HTMLReader r = new HTMLReader(et.getText().toString(),MyActivity.this);
 
-                android.net.NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                TextView tv = (TextView)findViewById(R.id.networkView);
 
-                if (networkInfo != null && networkInfo.isConnected()) {
+                if (r.readHTML(MyActivity.this) == 0) {
+                    //kicked off ok
+                    tv.setText("Network connection successful");
+
+                }
+                else {
+                    tv.setText("Network connection unsuccessful");
+                }
+                //android.net.ConnectivityManager connMgr = (android.net.ConnectivityManager)
+                  //      getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+
+                //android.net.NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+               // if (networkInfo != null && networkInfo.isConnected()) {
+              /*
+                String[] connResult = r.checkConnection(MyActivity.this);
+                if (connResult[0].equals("0")) {
                     // fetch data
                     TextView tv = (TextView)findViewById(R.id.networkView);
                     tv.setText("Network connection successful");
@@ -198,6 +219,7 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
                     TextView tv = (TextView)findViewById(R.id.networkView);
                     tv.setText("Network connection unsuccessful");
                 }
+                */
 
                 EditText tv1 = (EditText)findViewById(R.id.editView);
                 String s = tv1.getText().toString();
@@ -250,6 +272,7 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     //this override the implemented method from asyncTask
     @Override
     public void processFinish(String output){
@@ -273,5 +296,30 @@ public class MyActivity extends AppCompatActivity implements AsyncResponse {
             tv.setText("Parsing error. Input: " + output);
 
         }
+    }
+    */
+
+    public void htmlReadFinish(String html,String err) {
+        //Here you will receive the result fired from async class
+        //of onPostExecute(result) method.
+        int i = 1;
+        JSONObject jObject;
+        try {
+            jObject = new JSONObject(html);
+        }
+        catch (Exception e) {
+            jObject = null;
+        }
+
+        TextView tv = (TextView)findViewById(R.id.fileView);
+        try {
+
+            tv.setText("HTML: " + "Quiz Code: " + jObject.get("quizCode") + " name: " + jObject.get("quizText") + " whole thing: " + html);
+        }
+        catch(Exception e) {
+            tv.setText("Parsing error. Input: " + html + " err: " + err);
+
+        }
+
     }
 }
