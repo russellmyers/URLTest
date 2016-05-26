@@ -22,7 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.DialogFragment;
 
 interface AsyncResponse {
-    void processFinish(String output);
+        void processFinish(String output);
 }
 
 

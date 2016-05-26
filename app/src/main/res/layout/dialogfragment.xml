@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusableInTouchMode="true" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -10,15 +12,33 @@
         android:padding="10dp"
         android:text="@string/welcome"
         android:id="@+id/textView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Network status:"
+        android:id="@+id/netIndicView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Quiz name: "
+        android:id="@+id/quizName" />
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/quizCodeEditText" />
+        android:imeOptions="actionDone"
+        android:id="@+id/quizCodeEditText"
+        android:inputType="text" />
 
 
-
-
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
