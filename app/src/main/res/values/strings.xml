@@ -2,4 +2,6 @@
     <string name="app_name">Rectangle Party</string>
     <string name="action_settings">Settings</string>
     <string name="welcome">This is a DialogFragment wayback.</string>
+    <string name="dialogBlurb">This is a DialogFragment wayback blurb</string>
+    <string name="action_changeQuiz">Install new Quiz</string>
 </resources>

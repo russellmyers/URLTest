@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     android:orientation="vertical"
     android:clickable="true"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true"
+    android:background="#8c3131">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/welcome"
+
+        android:text="@string/dialogBlurb"
         android:id="@+id/textView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+
         android:text="Network status:"
         android:id="@+id/netIndicView" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+
         android:text="Quiz name: "
         android:id="@+id/quizName" />
 
@@ -31,18 +33,16 @@
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
         android:id="@+id/quizCodeEditText"
+        android:hint="GENEV"
         android:inputType="text" />
 
 
-    <ProgressBar
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:visibility="invisible" />
+        android:layout_gravity="center"
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        >
 
         <Button
             android:layout_width="wrap_content"
@@ -55,13 +55,24 @@
             android:layout_height="wrap_content"
             android:text="Install"
             android:id="@+id/installButton"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:enabled="false" />
+            android:enabled="false"
+            android:layout_toRightOf="@+id/cancelButton"
+            android:layout_toEndOf="@+id/cancelButton"
+            android:layout_marginLeft="10dp"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/installButton"
+            android:layout_toEndOf="@+id/installButton"
+             />
 
     </RelativeLayout>
-
-
 
 
 </LinearLayout>

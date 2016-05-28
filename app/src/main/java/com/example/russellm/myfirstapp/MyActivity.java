@@ -268,6 +268,13 @@ public class MyActivity extends AppCompatActivity implements HTMLReaderResponse 
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_changeQuiz) {
+            DFragment dFragment = new DFragment();
+            // Show DialogFragment
+            dFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+            dFragment.show(fm, "Dialog Fragment");
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
