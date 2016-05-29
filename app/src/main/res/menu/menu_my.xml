@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/action_changeQuiz"
-        android:icon="@drawable/ic_action_changeQuiz"
+        android:icon="@drawable/ic_action_loadquiz"
         android:orderInCategory="1"
         android:title="@string/action_changeQuiz"
         app:showAsAction="ifRoom" />

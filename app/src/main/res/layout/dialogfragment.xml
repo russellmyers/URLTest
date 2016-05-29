@@ -20,21 +20,31 @@
 
         android:text="Network status:"
         android:id="@+id/netIndicView" />
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        android:text="Quiz name: "
-        android:id="@+id/quizName" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:id="@+id/quizCodeEditText"
+            android:hint="GENEV"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text=""
+            android:id="@+id/quizName" />
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:id="@+id/quizCodeEditText"
-        android:hint="GENEV"
-        android:inputType="text" />
+    </LinearLayout>
+
 
 
     <RelativeLayout
